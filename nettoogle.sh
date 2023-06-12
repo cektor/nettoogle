@@ -44,16 +44,17 @@ toggle_ethernet() {
 
 # Konumu açma/kapama
 toggle_location() {
-    local location_status=$(nmcli radio wifi)
+    local location_status=$(gsettings get org.gnome.system.location enabled)
 
-    if [ "$location_status" == "disabled" ]; then
-        nmcli radio wifi on
+    if [ "$location_status" == "false" ]; then
+        gsettings set org.gnome.system.location enabled true
         echo "Konum açıldı."
     else
-        nmcli radio wifi off
+        gsettings set org.gnome.system.location enabled false
         echo "Konum kapatıldı."
     fi
 }
+
 
 # Ana döngü
 while true; do
@@ -88,4 +89,3 @@ while true; do
             ;;
     esac
 done
-
